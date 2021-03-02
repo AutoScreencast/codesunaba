@@ -1,0 +1,33 @@
+{
+  "name": "codesunaba",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "shadow-cljs watch app bootstrap",
+    "watch-all": "shadow-cljs watch app bootstrap test-browser",
+    "build": "shadow-cljs release app bootstrap",
+    "build-verbose": "shadow-cljs release --verbose app bootstrap",
+    "report": "shadow-cljs run shadow.cljs.build-report app report.html",
+    "debug-build": "shadow-cljs release app --debug",
+    "serve": "serve --single public --listen 5000",
+    "dev-build": "shadow-cljs compile app",
+    "repl": "shadow-cljs cljs-repl app",
+    "browser-repl": "shadow-cljs browser-repl",
+    "clojure-repl": "shadow-cljs clj-repl",
+    "test": "shadow-cljs watch test",
+    "test-browser": "shadow-cljs watch test-browser",
+    "test-once": "shadow-cljs compile test",
+    "clean": "rimraf public/js public/bootstrap",
+    "nuke": "rimraf public/js public/bootstrap .shadow-cljs node_modules yarn.lock package-lock.json out report.html",
+    "shadow-cljs-server": "shadow-cljs server"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "serve": "^11.3.2",
+    "shadow-cljs": "2.11.18"
+  },
+  "dependencies": {
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
+  }
+}

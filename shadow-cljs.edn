@@ -1,0 +1,40 @@
+{:source-paths
+ ["src/main"
+  "src/test"]
+
+ :dependencies
+ [[reagent            "1.0.0"]
+  [binaryage/devtools "1.0.2"]]
+
+ :dev-http
+ {3000 "public"}
+
+ :builds
+ {:app
+  {:target     :browser
+   :output-dir "public/js"
+   :asset-path "/js"
+   :compiler-options
+   {:optimizations  :simple
+    :output-wrapper false}
+   :modules
+   {:main
+    {:init-fn codesunaba.app.core/main}}}
+
+  :bootstrap
+  {:target     :bootstrap
+   :output-dir "public/bootstrap"
+   :exclude    #{cljs.js}
+   :entries    [cljs.js reagent.core reagent.dom]
+   :macros     []}
+
+  :test
+  {:target     :node-test
+   :output-to  "out/node/tests.js"
+   :autorun    true}
+
+  :test-browser
+  {:target     :browser-test
+   :test-dir   "out/browser/test"
+   :devtools   {:http-port 3021
+                :http-root "out/browser/test"}}}}
