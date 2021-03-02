@@ -81,7 +81,9 @@
        [:button {:on-click #(do (reset! user-input todo-app-example)
                                 (compile-it @user-input))}
         "Reagent: \"Todo App\""]]
-      [:pre>code "Output: " [:strong (str @evaluated-output)]]]
+      [:pre>code {:style {:white-space "pre-wrap"}}
+       "Output: "
+       [:strong (binding [*print-length* 100] (pr-str @evaluated-output))]]]
      [:p "Preparing the self-hosted CLJS environment..."])])
 
 (defn render []
