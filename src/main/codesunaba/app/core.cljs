@@ -15,6 +15,12 @@
 (defonce user-input (r/atom nil))
 (defonce evaluated-output (r/atom nil))
 
+(defn debounce [timer-atom fun delay-in-ms]
+  (when @timer-atom
+    (js/clearTimeout @timer-atom)
+    (reset! timer-atom nil))
+  (reset! timer-atom (js/setTimeout fun delay-in-ms)))
+
 (defn compile-it [code]
   (let [options  {:eval cljs/js-eval
                   :load (partial boot/load c-state)}
@@ -23,9 +29,10 @@
     (cljs/eval-str c-state code "[demo-bootstrap-cljs]" options callback)))
 
 (defn code-editor []
-  (let [handle-change (fn [value _event]
+  (let [timer         (atom nil)
+        handle-change (fn [value _event]
                         (reset! user-input value)
-                        (compile-it @user-input))]
+                        (debounce timer #(compile-it @user-input) 300))]
     (fn []
       [:> MonacoEditor {:height          "50vh"
                         :defaultValue    @user-input
@@ -50,10 +57,11 @@
      [:i "a simple ClojureScript sandbox"]]]
    [:h4 {:style {:margin-bottom 12 :color :grey}}
     "Write some ClojureScript code in the code editor below."]
-   [:h6 {:style {:margin-bottom 12 :color :grey}}
-    "The packages `reagent.core` and `reagent.dom` are supported.
-     You can render your components to the DOM using:
-     `(.getElementById js/document \"app\")`"]
+   [:h6 {:style {:margin-bottom 8 :color :grey}}
+    "The packages `reagent.core` and `reagent.dom` are supported."]
+   [:h6 {:style {:margin-bottom 16 :color :grey}}
+    "You can render your components to the DOM by targeting the `app` node:
+	   `(.getElementById js/document \"app\")`"]
    (if @eval-ready?
      [:<>
       [code-editor]
