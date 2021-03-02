@@ -9,6 +9,7 @@ report.html
 
 # generated js
 /public/js
+/public/bootstrap
 /out
 
 # misc
