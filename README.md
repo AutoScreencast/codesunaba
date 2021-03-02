@@ -1,3 +1,12 @@
+# CodeSunaba
+
+Code sandbox - starting with self-hosted ClojureScript.
+
+Scaffolded with Create-Reagent-App, documentation below...
+
+<hr />
+
+
 <img src="https://raw.githubusercontent.com/cljs/logo/master/cljs.svg" height="120">
 
 # Create Reagent App
@@ -217,4 +226,3 @@ You can run the process in the foreground in a dedicated Terminal. Use CTRL+C to
 ```
 npm run shadow-cljs-server
 ```
-
