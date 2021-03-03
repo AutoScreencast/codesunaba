@@ -17,7 +17,8 @@
 
 (defonce eval-ready?      (r/atom false))
 (defonce c-state          (env/default-compiler-env))
-(defonce user-input       (r/atom nil))
+(defonce cljs-input       (r/atom nil))
+(defonce css-input        (r/atom nil))
 (defonce evaluated-output (r/atom nil))
 
 ;; ============
@@ -34,12 +35,21 @@
    [header]
    (if @eval-ready?
      [:<>
-      [examples {:user-input user-input
-                 :compile-it compile-it}]
-      [code-editor {:user-input user-input
-                    :compile-it compile-it
-                    :language   "clojure"}]
-      [clear-editor user-input evaluated-output]
+      [examples {:cljs-input cljs-input, :compile-it compile-it}]
+      [:div "ClojureScript"
+       [code-editor {:input      cljs-input
+                     :compile-it compile-it
+                     :language   "clojure"}]
+       [clear-editor {:input            cljs-input
+                      :evaluated-output evaluated-output
+                      :language         "clojure"}]]
+      [:div "CSS"
+       [code-editor {:input      css-input
+                     :compile-it nil
+                     :language   "css"}]
+       [clear-editor {:input            css-input
+                      :evaluated-output nil
+                      :language         "css"}]]
       [output evaluated-output]]
      [:p "Preparing the self-hosted CLJS environment..."])])
 
@@ -47,10 +57,9 @@
   (rdom/render [app] (.getElementById js/document "root")))
 
 (defn ^:export main []
-  (.remove (.getElementById js/document "initial"))
+  (.remove (.getElementById js/document "loading-message"))
   (boot/init c-state {:path "/bootstrap"} #(reset! eval-ready? true))
   (render))
 
 (defn ^:dev/after-load reload! []
-  (println @user-input)
   (render))

@@ -1,5 +1,6 @@
 (ns codesunaba.app.views.code-editor
-  (:require ["@monaco-editor/react" :default MonacoEditor]))
+  (:require [clojure.string :as str]
+            ["@monaco-editor/react" :default MonacoEditor]))
 
 (defn debounce [timer-atom fun delay-in-ms]
   (when @timer-atom
@@ -7,15 +8,26 @@
     (reset! timer-atom nil))
   (reset! timer-atom (js/setTimeout fun delay-in-ms)))
 
-(defn code-editor [{:keys [user-input compile-it language]}]
-  (let [timer         (atom nil)
-        handle-change (fn [value _event]
-                        (reset! user-input value)
-                        (debounce timer #(compile-it @user-input) 300))]
+(defn code-editor [{:keys [input compile-it language]}]
+  (let [timer         	(atom nil) ; for debounce
+        escape-css    	#(-> %
+                            (str/replace #"\n" " ")    ; replace newline with a space
+                            (str/replace "'" "\\'")    ; replace ' with \'
+                            (str/replace "\"" "\\\"")) ; replace " with \"
+        insert-style-el (fn [css]
+                          (let [style-el (.createElement js/document "style")]
+                            (set! (.-innerText style-el) (escape-css css))
+                            (.appendChild (.-head js/document) style-el)))
+        handle-change 	(fn [value _event]
+                         (reset! input value)
+                         (println @input)
+                         (case language
+                           "clojure" (debounce timer #(compile-it @input) 300)
+                           "css"     (insert-style-el @input)))]
     (fn []
       [:> MonacoEditor {:height          "50vh"
                         :defaultValue    ""
-                        :value           @user-input
+                        :value           @input
                         :onChange        handle-change
                         :defaultLanguage language
                         :theme           "vs-dark"
