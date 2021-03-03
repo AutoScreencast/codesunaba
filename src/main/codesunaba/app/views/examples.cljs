@@ -1,7 +1,7 @@
-(ns codesunaba.app.examples
-  (:require [codesunaba.app.hello-world :refer [hello-world-example]]
-            [codesunaba.app.color-clock :refer [color-clock-example]]
-            [codesunaba.app.todo-app :refer [todo-app-example]]))
+(ns codesunaba.app.views.examples
+  (:require [codesunaba.app.examples.hello-world :refer [hello-world-example]]
+            [codesunaba.app.examples.color-clock :refer [color-clock-example]]
+            [codesunaba.app.examples.todo-app :refer [todo-app-example]]))
 
 (defn examples
   "Shows a sequence of buttons. When one of the buttons is pressed,

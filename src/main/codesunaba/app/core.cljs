@@ -4,11 +4,11 @@
             [shadow.cljs.bootstrap.browser :as boot]
             [reagent.core :as r]
             [reagent.dom :as rdom]
-            [codesunaba.app.header :refer [header]]
-            [codesunaba.app.code-editor :refer [code-editor]]
-            [codesunaba.app.examples :refer [examples]]
-            [codesunaba.app.clear-editor :refer [clear-editor]]
-            [codesunaba.app.output :refer [output]]))
+            [codesunaba.app.views.header :refer [header]]
+            [codesunaba.app.views.code-editor :refer [code-editor]]
+            [codesunaba.app.views.examples :refer [examples]]
+            [codesunaba.app.views.clear-editor :refer [clear-editor]]
+            [codesunaba.app.views.output :refer [output]]))
 
 ;; sunaba - Japanese for "sandbox"
 ;; codesunaba.com is available

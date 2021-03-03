@@ -1,4 +1,4 @@
-(ns codesunaba.app.output)
+(ns codesunaba.app.views.output)
 
 (defn output [evaluated-output]
   [:pre>code {:style {:white-space "pre-wrap"}}

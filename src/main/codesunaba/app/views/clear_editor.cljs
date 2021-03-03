@@ -1,4 +1,4 @@
-(ns codesunaba.app.clear-editor)
+(ns codesunaba.app.views.clear-editor)
 
 (defn clear-editor [user-input]
   [:div {:style {:display :flex, :justify-content :flex-end}}

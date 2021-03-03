@@ -1,4 +1,4 @@
-(ns codesunaba.app.hello-world)
+(ns codesunaba.app.examples.hello-world)
 
 (def hello-world-example
   "(ns hello-world-example.core

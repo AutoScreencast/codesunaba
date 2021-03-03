@@ -1,4 +1,4 @@
-(ns codesunaba.app.code-editor
+(ns codesunaba.app.views.code-editor
   (:require ["@monaco-editor/react" :default MonacoEditor]))
 
 (defn debounce [timer-atom fun delay-in-ms]

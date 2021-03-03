@@ -1,4 +1,4 @@
-(ns codesunaba.app.todo-app)
+(ns codesunaba.app.examples.todo-app)
 
 (def todo-app-example
   "(ns todo-app-example.core

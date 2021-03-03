@@ -1,4 +1,4 @@
-(ns codesunaba.app.color-clock)
+(ns codesunaba.app.examples.color-clock)
 
 (def color-clock-example
   "(ns color-clock-example.core
