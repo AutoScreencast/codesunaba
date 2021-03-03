@@ -10,13 +10,13 @@
   [:p {:style {:margin "12px 0"}}
    "Examples: "
    [:button {:on-click #(do (reset! cljs-input hello-world-example)
-                            (compile-it @cljs-input))}
+                            (compile-it hello-world-example))}
     "Reagent: \"Hello, World!\""]
    [:span " "]
    [:button {:on-click #(do (reset! cljs-input color-clock-example)
-                            (compile-it @cljs-input))}
+                            (compile-it color-clock-example))}
     "Reagent: \"Color Clock\""]
    [:span " "]
    [:button {:on-click #(do (reset! cljs-input todo-app-example)
-                            (compile-it @cljs-input))}
+                            (compile-it todo-app-example))}
     "Reagent: \"Todo App\""]])

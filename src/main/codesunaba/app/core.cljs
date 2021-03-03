@@ -28,14 +28,15 @@
                   :load (partial boot/load c-state)}
         callback (fn [result]
                    (reset! evaluated-output (:value result)))]
-    (cljs/eval-str c-state code "[demo-bootstrap-cljs]" options callback)))
+    (cljs/eval-str c-state code "[code-sunaba]" options callback)))
 
 (defn app []
   [:<>
    [header]
    (if @eval-ready?
      [:<>
-      [examples {:cljs-input cljs-input, :compile-it compile-it}]
+      [examples {:cljs-input cljs-input
+                 :compile-it compile-it}]
       [:div {:style {:display :flex}}
        [:div {:style {:width "65%", :margin-right 4}} "ClojureScript"
         [code-editor {:input      cljs-input
