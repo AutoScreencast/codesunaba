@@ -36,20 +36,21 @@
    (if @eval-ready?
      [:<>
       [examples {:cljs-input cljs-input, :compile-it compile-it}]
-      [:div "ClojureScript"
-       [code-editor {:input      cljs-input
-                     :compile-it compile-it
-                     :language   "clojure"}]
-       [clear-editor {:input            cljs-input
-                      :evaluated-output evaluated-output
-                      :language         "clojure"}]]
-      [:div "CSS"
-       [code-editor {:input      css-input
-                     :compile-it nil
-                     :language   "css"}]
-       [clear-editor {:input            css-input
-                      :evaluated-output nil
-                      :language         "css"}]]
+      [:div {:style {:display :flex}}
+       [:div {:style {:width "65%", :margin-right 4}} "ClojureScript"
+        [code-editor {:input      cljs-input
+                      :compile-it compile-it
+                      :language   "clojure"}]
+        [clear-editor {:input            cljs-input
+                       :evaluated-output evaluated-output
+                       :language         "clojure"}]]
+       [:div {:style {:width "35%"}} "CSS"
+        [code-editor {:input      css-input
+                      :compile-it nil
+                      :language   "css"}]
+        [clear-editor {:input            css-input
+                       :evaluated-output nil
+                       :language         "css"}]]]
       [output evaluated-output]]
      [:p "Preparing the self-hosted CLJS environment..."])])
 
