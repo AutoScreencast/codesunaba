@@ -39,7 +39,7 @@
       [code-editor {:user-input user-input
                     :compile-it compile-it
                     :language   "clojure"}]
-      [clear-editor user-input]
+      [clear-editor user-input evaluated-output]
       [output evaluated-output]]
      [:p "Preparing the self-hosted CLJS environment..."])])
 
