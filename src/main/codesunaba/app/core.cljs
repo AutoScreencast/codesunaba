@@ -7,6 +7,7 @@
             [codesunaba.app.header :refer [header]]
             [codesunaba.app.code-editor :refer [code-editor]]
             [codesunaba.app.examples :refer [examples]]
+            [codesunaba.app.clear-editor :refer [clear-editor]]
             [codesunaba.app.output :refer [output]]))
 
 ;; sunaba - Japanese for "sandbox"
@@ -33,11 +34,12 @@
    [header]
    (if @eval-ready?
      [:<>
+      [examples {:user-input user-input
+                 :compile-it compile-it}]
       [code-editor {:user-input user-input
                     :compile-it compile-it
                     :language   "clojure"}]
-      [examples {:user-input user-input
-                 :compile-it compile-it}]
+      [clear-editor user-input]
       [output evaluated-output]]
      [:p "Preparing the self-hosted CLJS environment..."])])
 
