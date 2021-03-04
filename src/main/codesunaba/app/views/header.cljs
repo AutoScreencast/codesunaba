@@ -11,8 +11,8 @@
     "✍️ Write some ClojureScript code in the code editor below."]
    [:h4.mb12.dimgrey.tooltip
     "☝️ You can create React components using Reagent. They will be
-	  rendered below the horizontal line under `Output`."
+	  rendered below the horizontal line under ‘Output’."
     [:div.tooltiptext
-     [:div.mb6 "The packages `reagent.core` and `reagent.dom` are supported."]
-     [:div.mb6 "You can render your components to the DOM by targeting the `app` div."]
+     [:div.mb6 "The packages ‘reagent.core’ and ‘reagent.dom’ are supported."]
+     [:div.mb6 "You can render your components to the DOM by targeting the ‘app’ div."]
      [:div.mb6 "CSS styles will apply to the entire page."]]]])

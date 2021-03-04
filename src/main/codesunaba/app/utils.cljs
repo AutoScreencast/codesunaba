@@ -14,8 +14,7 @@
                                  (str/replace "'" "\\'")
                                  (str/replace "\"" "\\\"")))
         prev-style-el (.getElementById js/document style-tag-id)
-        new-style-el  (.createElement js/document "style")
-        _ (println "==== insert style ====")]
+        new-style-el  (.createElement js/document "style")]
     (when prev-style-el (.remove prev-style-el))
     (.setAttribute new-style-el "id" style-tag-id)
     (set! (.-innerText new-style-el) (escape-css css))

@@ -165,7 +165,7 @@
 
 (def todo-app-example-css
   ".wrapper {
-  	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	line-height: 1.4em;
 	color: #111111;
 	min-width: 230px;

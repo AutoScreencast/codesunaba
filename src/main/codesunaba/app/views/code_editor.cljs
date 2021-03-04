@@ -30,20 +30,22 @@
                     (:cljs-input @state))]
         [:div.mr4 {:style {:width width}}
          [:div.mb6 label]
-         [:> MonacoEditor {:height          "35vh"
-                           :defaultValue    ""
-                           :value           input
-                           :onChange        handle-change
+         [:> MonacoEditor {:height "35vh"
+                           :defaultValue ""
+                           :value input
+                           :onChange handle-change
                            :defaultLanguage editor-language
-                           :theme           "vs-dark"
-                           :options         {:wordWrap             "on"
-                                             :minimap              {:enabled false}
-                                             :showUnused           false
-                                             :folder               false
-                                             :lineNumbersMinChars  3
-                                             :fontSize             font-size
-                                             :tabSize              2
-                                             :scrollBeyondLastLine false
-                                             :automaticLayout      true}}]
+                           :theme "vs-dark"
+                           :options {:wordWrap (if (= editor-language "css")
+                                                 "off" "on")
+                                     :minimap {:enabled false}
+                                     :showUnused false
+                                     :folder false
+                                     :lineNumbersMinChars (if (= editor-language "css")
+                                                            2 3)
+                                     :fontSize font-size
+                                     :tabSize 2
+                                     :scrollBeyondLastLine false
+                                     :automaticLayout true}}]
          [clear-editor {:state           state
                         :editor-language editor-language}]]))))
