@@ -1,7 +1,16 @@
 {
   "name": "codesunaba",
   "version": "0.1.0",
-  "private": true,
+	"description": "A simple ClojureScript sandbox",
+	"keywords": ["ClojureScript","CLJS","Shadow-CLJS","Clojure","JavaScript","CSS","Reagent","React"],
+	"homepage": "https://codesunaba.netlify.app/",
+  "author": "Tom Bowden (AutoScreencast)",
+	"email" : "tom.bowden@autoscreencast.com",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AutoScreencast/codesunaba.git"
+  },
   "scripts": {
     "start": "shadow-cljs watch app bootstrap",
     "watch-all": "shadow-cljs watch app bootstrap test-browser",
