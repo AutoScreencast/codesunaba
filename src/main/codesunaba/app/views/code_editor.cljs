@@ -1,45 +1,49 @@
 (ns codesunaba.app.views.code-editor
-  (:require [clojure.string :as str]
-            ["@monaco-editor/react" :default MonacoEditor]))
+  (:require [reagent.dom :as rdom]
+            ["@monaco-editor/react" :default MonacoEditor]
+            [codesunaba.app.utils :refer [debounce insert-style-el]]))
 
-(defn debounce [timer-atom fun delay-in-ms]
-  (when @timer-atom
-    (js/clearTimeout @timer-atom)
-    (reset! timer-atom nil))
-  (reset! timer-atom (js/setTimeout fun delay-in-ms)))
+(defn clear-editor [{:keys [state editor-language]}]
+  (let [app-div   (.getElementById js/document "app")
+        clear-all #(if (= editor-language "css")
+                     (swap! state assoc :css-input nil)
+                     (do (swap! state assoc :cljs-input nil)
+                         (swap! state assoc :evaluated-input nil)
+                         (rdom/unmount-component-at-node app-div)))]
+    [:div.jc-flex-end
+     [:button.clear-button {:on-click clear-all}
+      "Clear"]]))
 
-(defn code-editor [{:keys [input compile-it language]}]
-  (let [timer         	(atom nil) ; for debounce
-        escape-css    	#(-> %
-                            (str/replace #"\n" " ")    ; replace newline with a space
-                            (str/replace "'" "\\'")    ; replace ' with \'
-                            (str/replace "\"" "\\\"")) ; replace " with \"
-        insert-style-el (fn [css]
-                          (let [sunaba-style  "sunaba-style"
-                                prev-style-el (.getElementById js/document sunaba-style)
-                                new-style-el (.createElement js/document "style")]
-                            (when prev-style-el (.remove prev-style-el))
-                            (.setAttribute new-style-el "id" sunaba-style)
-                            (set! (.-innerText new-style-el) (escape-css css))
-                            (.appendChild (.-head js/document) new-style-el)))
-        handle-change 	(fn [value _event]
-                         (reset! input value)
-                         (case language
-                           "clojure" (debounce timer #(compile-it @input) 300)
-                           "css"     (debounce timer #(insert-style-el @input) 1000)))]
+(defn code-editor [{:keys [label width font-size state editor-language]}]
+  (let [debounce-timer  (atom nil)
+        handle-change   (fn [value _event]
+                          (let [css-input (:css-input @state)]
+                            (if (= editor-language "css")
+                              (debounce debounce-timer
+                                        #(do (swap! state assoc :css-input value)
+                                             (insert-style-el css-input "sunaba"))
+                                        200)
+                              (swap! state assoc :cljs-input value))))]
     (fn []
-      [:> MonacoEditor {:height          "50vh"
-                        :defaultValue    ""
-                        :value           @input
-                        :onChange        handle-change
-                        :defaultLanguage language
-                        :theme           "vs-dark"
-                        :options         {:wordWrap             "on"
-                                          :minimap              {:enabled false}
-                                          :showUnused           false
-                                          :folder               false
-                                          :lineNumbersMinChars  3
-                                          :fontSize             16
-                                          :tabSize              2
-                                          :scrollBeyondLastLine false
-                                          :automaticLayout      true}}])))
+      (let [input (if (= editor-language "css")
+                    (:css-input @state)
+                    (:cljs-input @state))]
+        [:div.mr4 {:style {:width width}}
+         [:div.mb6 label]
+         [:> MonacoEditor {:height          "35vh"
+                           :defaultValue    ""
+                           :value           input
+                           :onChange        handle-change
+                           :defaultLanguage editor-language
+                           :theme           "vs-dark"
+                           :options         {:wordWrap             "on"
+                                             :minimap              {:enabled false}
+                                             :showUnused           false
+                                             :folder               false
+                                             :lineNumbersMinChars  3
+                                             :fontSize             font-size
+                                             :tabSize              2
+                                             :scrollBeyondLastLine false
+                                             :automaticLayout      true}}]
+         [clear-editor {:state           state
+                        :editor-language editor-language}]]))))

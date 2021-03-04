@@ -2,14 +2,17 @@
 
 (defn header []
   [:<>
-   [:div {:style {:display :flex :justify-content :space-between :margin-bottom 24}}
-    [:h1 {:style {:margin-bottom 12}} "Code Sunaba"]
-    [:h1 {:style {:color :grey :text-align :right}}
-     [:i "a simple ClojureScript sandbox"]]]
-   [:h4 {:style {:margin-bottom 12 :color :grey}}
-    "Write some ClojureScript code in the code editor below."]
-   [:h6 {:style {:margin-bottom 8 :color :grey}}
-    "The packages `reagent.core` and `reagent.dom` are supported."]
-   [:h6 {:style {:margin-bottom 16 :color :grey}}
-    "You can render your components to the DOM by targeting the `app` node:
-	 	   `(.getElementById js/document \"app\")`"]])
+   [:div.mb24.jc-space-between-ai-center
+    [:h1.tooltip.no-bb.mb12.dodgerblue.bold "Code Sunaba"
+     [:div.tooltiptext.position-right.normal "Sunaba is Japanese for “sandbox”"]]
+    [:h3.grey.tar
+     [:i "“a simple ClojureScript sandbox”"]]]
+   [:h4.dimgrey.mb12
+    "✍️ Write some ClojureScript code in the code editor below."]
+   [:h4.mb12.dimgrey.tooltip
+    "☝️ You can create React components using Reagent. They will be
+	  rendered below the horizontal line under `Output`."
+    [:div.tooltiptext
+     [:div.mb6 "The packages `reagent.core` and `reagent.dom` are supported."]
+     [:div.mb6 "You can render your components to the DOM by targeting the `app` div."]
+     [:div.mb6 "CSS styles will apply to the entire page."]]]])
