@@ -2,6 +2,8 @@
 
 A simple ClojureScript sandbox (“sunaba” means “sandbox” in Japanese).
 
+<img src="https://codesunaba.netlify.app/img/20210304codesunaba.png" width="100%">
+
 This app was scaffolded using [create-reagent-app](https://www.npmjs.com/package/create-reagent-app), which is powered by [Shadow-CLJS](https://github.com/thheller/shadow-cljs).
 
 See a [live demo](https://codesunaba.netlify.app/) of the app.
