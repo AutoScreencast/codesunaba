@@ -7,8 +7,13 @@
      [:div.tooltiptext.position-right.normal "Sunaba is Japanese for “sandbox”"]]
     [:h3.grey.tar
      [:i "“a simple ClojureScript sandbox”"]]]
-   [:h4.dimgrey.mb12
-    "✍️ Write some ClojureScript code in the code editor below."]
+
+   [:div.jc-space-between-ai-center
+    [:h4.dimgrey.mb12
+     "✍️ Write some ClojureScript code in the code editor below."]
+    [:a.forestgreen {:href "https://github.com/AutoScreencast/codesunaba"}
+     "GitHub"]]
+
    [:h4.mb12.dimgrey.tooltip
     "☝️ You can create React components using Reagent. They will be
 	  rendered below the horizontal line under ‘Output’."
