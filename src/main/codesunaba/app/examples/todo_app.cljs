@@ -137,7 +137,7 @@
 
 (defn task-entry []
   [:header.header
-   [:h1 \"todos \"]
+   [:h1 \"todos\"]
    [todo-input {:class \"new-todo\"
                 :placeholder \"What needs to be done?\"
                 :on-save add-todo}]])
