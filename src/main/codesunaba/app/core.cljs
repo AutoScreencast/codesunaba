@@ -2,6 +2,8 @@
   (:require [cljs.js :as cljs]
             [cljs.env :as env]
             [shadow.cljs.bootstrap.browser :as boot]
+            ["react" :as react] ; required for webpack
+            ["react-dom" :as react-dom] ; required for webpack
             [reagent.core :as r]
             [reagent.dom :as rdom]
             [codesunaba.app.utils :refer [debounce]]

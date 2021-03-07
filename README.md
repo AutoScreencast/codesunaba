@@ -19,4 +19,10 @@ npm install
 npm start
 ```
 
-Open `http://localhost:3000` in your browser, and enjoy!
+When you see both: `[:app] Build completed.` and `[:bootstrap] Build completed.`, please run the following command in a separate Terminal process:
+
+```
+npm run webpack-dev`
+```
+
+Then, open `http://localhost:3000` in your browser, and enjoy!
