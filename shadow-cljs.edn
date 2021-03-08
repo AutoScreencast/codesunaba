@@ -4,6 +4,7 @@
 
  :dependencies
  [[reagent            "1.0.0"]
+  [re-frame           "1.2.0"]
   [binaryage/devtools "1.0.2"]]
 
  :dev-http
@@ -25,7 +26,7 @@
   {:target     :bootstrap
    :output-dir "public/bootstrap"
    :exclude    #{cljs.js}
-   :entries    [cljs.js reagent.core reagent.dom]
+   :entries    [cljs.js reagent.core reagent.dom re-frame.core]
    :macros     []}
 
   :test

@@ -11,6 +11,7 @@ report.html
 /public/js
 /public/bootstrap
 /out
+/target
 
 # misc
 .DS_Store
