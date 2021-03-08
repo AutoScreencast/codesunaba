@@ -1,5 +1,8 @@
 (ns codesunaba.app.views.examples
-  (:require [codesunaba.app.utils :refer [insert-style-el]]
+  (:require [reagent.dom :as rdom]
+            [codesunaba.app.utils :refer [insert-style-el]]
+            [codesunaba.app.examples.fizzbuzz :refer [fizzbuzz-example
+                                                      fizzbuzz-example-css]]
             [codesunaba.app.examples.hello-world :refer [hello-world-example
                                                          hello-world-example-css]]
             [codesunaba.app.examples.color-clock :refer [color-clock-example
@@ -10,9 +13,11 @@
                                                               re-frame-counter-example-css]]))
 
 (defn handle-click [state example example-css]
-  (swap! state assoc :css-input example-css)
-  (swap! state assoc :cljs-input example)
-  (insert-style-el (:css-input @state) "sunaba"))
+  (let [app-div (.getElementById js/document "app")]
+    (rdom/unmount-component-at-node app-div)
+    (swap! state assoc :css-input example-css)
+    (swap! state assoc :cljs-input example)
+    (insert-style-el (:css-input @state) "sunaba")))
 
 (defn examples
   "Shows a sequence of buttons. When one of the buttons is pressed,
@@ -20,6 +25,9 @@
   [state]
   [:p.mt12.mb18
    "Examples:"
+
+   [:button.ml6 {:on-click #(handle-click state fizzbuzz-example fizzbuzz-example-css)}
+    "“FizzBuzz”"]
 
    [:button.ml6 {:on-click #(handle-click state hello-world-example hello-world-example-css)}
     "Reagent: “Hello, World!”"]
