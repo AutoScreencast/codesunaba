@@ -1,59 +1,131 @@
-(ns codesunaba.app.examples.todo-app)
+(ns codesunaba.app.examples.re-frame.todo-app)
 
-(def todo-app-example
-  "(ns todo-app-example.core
+(def re-frame-todo-app-example
+  "(ns re-frame-todo-app-example.core
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]
+            [re-frame.core :as rf]
             [clojure.string :as str]))
 
-;; --- App State ----
+;; --- App DB ----
 
-(defonce todos (r/atom (sorted-map)))
+(def default-db {:todos (sorted-map)
+                 :showing :all})
 
-(defonce counter (r/atom 0))
+;; --- Add Sample Data ----
 
-;; --- Watch the State ----
-
-(add-watch todos :todos
-           (fn [key _atom _old-state new-state]
-             (println \"---\" key \"atom changed ---\")
-             (println new-state)))
+(defn add-sample-data []
+  (rf/dispatch [:add-todo \"Do laundry\"])
+  (rf/dispatch [:add-todo \"Wash dishes\"])
+  (rf/dispatch [:add-todo \"Buy groceries\"]))
 
 ;; --- Utilities ----
 
-(defn add-todo [text]
-  (let [id (swap! counter inc)
-        new-todo {:id id, :title text, :done false}]
-    (swap! todos assoc id new-todo)))
+(defn allocate-next-id [todos]
+  ((fnil inc 0) (last (keys todos))))
 
-(defn toggle-done [id]
-  (swap! todos update-in [id :done] not))
+;; --- Event Handlers ----
 
-(defn save-todo [id title]
-  (swap! todos assoc-in [id :title] title))
+(rf/reg-event-db
+ :initialize-db
+ (fn [_db _event-v]
+   default-db))
 
-(defn delete-todo [id]
-  (swap! todos dissoc id))
+(rf/reg-event-db
+ :set-showing
+ (fn [db [_event-id kw]]
+   (assoc-in db [:showing] kw)))
 
-(defn mmap [m f g]
-  (->> m
-       (f g)
-       (into (empty m))))
+(rf/reg-event-db
+ :add-todo
+ (fn [db [_event-id text]]
+   (let [id (allocate-next-id (:todos db))
+         new-todo {:id id, :title text, :done false}]
+     (assoc-in db [:todos id] new-todo))))
 
-(defn complete-all-toggle [b]
-  (let [g #(assoc-in % [1 :done] b)]
-    (swap! todos mmap map g)))
+(rf/reg-event-db
+ :toggle-done
+ (fn [db [_event-id id]]
+   (update-in db [:todos id :done] not)))
 
-(defn clear-completed []
-  (let [g #(get-in % [1 :done])]
-    (swap! todos mmap remove g)))
+(rf/reg-event-db
+ :save-todo
+ (fn [db [_event-id id title]]
+   (assoc-in db [:todos id :title] title)))
 
-;; --- Initialize App with Sample Data ----
+(rf/reg-event-db
+ :delete-todo
+ (fn [db [_event-id id]]
+   (update-in db [:todos] dissoc id)))
 
-(defonce init (do
-                (add-todo \"Do laundry\")
-                (add-todo \"Wash dishes\")
-                (add-todo \"Buy groceries\")))
+(rf/reg-event-db
+ :complete-all-toggle
+ (fn [db _event-v]
+   (let [todos (:todos db)
+         b (not-every? :done (vals todos))
+         g (fn [m id]
+             (assoc-in m [id :done] b))
+         ids (keys todos)
+         updated-todos (reduce g todos ids)]
+     (assoc db :todos updated-todos))))
+
+(rf/reg-event-db
+ :clear-completed
+ (fn [db _event-v]
+   (let [todos (:todos db)
+         done-ids (->> (vals todos)
+                       (filter :done)
+                       (map :id))
+         updated-todos (reduce dissoc todos done-ids)]
+     (assoc db :todos updated-todos))))
+
+;; --- Subscriptions ----
+
+(rf/reg-sub
+ :showing
+ (fn [db _query-v]
+   (:showing db)))
+
+(rf/reg-sub
+ :sorted-todos
+ (fn [db _query-v]
+   (:todos db)))
+
+(rf/reg-sub
+ :todos
+ :<- [:sorted-todos]
+ (fn [sorted-todos _query-v _dyn-v]
+   (vals sorted-todos)))
+
+(rf/reg-sub
+ :visible-todos
+ :<- [:todos]
+ :<- [:showing]
+ (fn [[todos showing] _query-v _dyn-v]
+   (let [filter-fn (case showing
+                     :done :done
+                     :active (complement :done)
+                     :all identity)]
+     (filter filter-fn todos))))
+
+(rf/reg-sub
+ :all-complete?
+ :<- [:todos]
+ (fn [todos _query-v _dyn-v]
+   (every? :done todos)))
+
+(rf/reg-sub
+ :completed-count
+ :<- [:todos]
+ (fn [todos _query-v _dyn-v]
+   (count (filter :done todos))))
+
+(rf/reg-sub
+ :footer-counts
+ :<- [:todos]
+ :<- [:completed-count]
+ (fn [[todos completed] _query-v _dyn-v]
+   [(- (count todos) completed) completed]))
 
 ;; --- Views ----
 
@@ -73,7 +145,7 @@
     (fn [{:keys [class placeholder]}]
       [:input {:class class
                :placeholder placeholder
-               ;; :auto-focus true
+							 ;; :auto-focus true
                :type \"text\"
                :value @input-text
                :on-blur save
@@ -84,47 +156,41 @@
   (let [editing (r/atom false)]
     (fn [{:keys [id title done]}]
       [:li {:class (str (when done \"completed \")
-                        (when @editing \"editing \"))}
+                        (when @editing \"editing\"))}
        [:div.view
         [:input {:class \"toggle\"
                  :type \"checkbox\"
                  :checked done
-                 :on-change #(toggle-done id)}]
+                 :on-change #(rf/dispatch [:toggle-done id])}]
         [:label {:on-double-click #(reset! editing true)} title]
-        [:button.destroy {:on-click #(delete-todo id)}]]
+        [:button.destroy {:on-click #(rf/dispatch [:delete-todo id])}]]
        (when @editing
          [todo-input {:class \"edit\"
                       :title title
-                      :on-save (fn [text] (save-todo id text))
+                      :on-save #(rf/dispatch [:save-todo id %])
                       :on-stop #(reset! editing false)}])])))
 
-(defn task-list [showing]
-  (let [items (vals @todos)
-        filter-fn (case @showing
-                    :done :done
-                    :active (complement :done)
-                    :all identity)
-        visible-items (filter filter-fn items)
-        all-complete? (every? :done items)]
+(defn task-list []
+  (let [all-complete? @(rf/subscribe [:all-complete?])
+        visible-todos @(rf/subscribe [:visible-todos])]
     [:section.main
      [:input {:id \"toggle-all\"
               :class \"toggle-all\"
               :type \"checkbox\"
               :checked all-complete?
-              :on-change #(complete-all-toggle (not all-complete?))}]
+              :on-change #(rf/dispatch [:complete-all-toggle])}]
      [:label {:for \"toggle-all\"} \"Mark all as complete\"]
      [:ul.todo-list
-      (for [todo visible-items]
+      (for [todo visible-todos]
         ^{:key (:id todo)} [todo-item todo])]]))
 
-(defn footer-controls [showing]
-  (let [items (vals @todos)
-        done-count (count (filter :done items))
-        active-count (- (count items) done-count)
+(defn footer-controls []
+  (let [showing @(rf/subscribe [:showing])
+        [active-count done-count] @(rf/subscribe [:footer-counts])
         props-for (fn [kw]
-                    {:class (when (= kw @showing) \"selected\")
-                     :on-click #(reset! showing kw)
-                     :href \"#\"})]
+                    {:class (when (= kw showing) \"selected\")
+                     :on-click #(rf/dispatch [:set-showing kw])
+                     :href (str \"#/\" (name kw))})]
     [:footer.footer
      [:span.todo-count
       [:strong active-count] \" \" (case active-count 1 \"item\" \"items\") \" left\"]
@@ -133,40 +199,41 @@
       [:li [:a (props-for :active) \"Active\"]]
       [:li [:a (props-for :done) \"Completed\"]]]
      (when (pos? done-count)
-       [:button.clear-completed {:on-click clear-completed} \"Clear completed\"])]))
+       [:button.clear-completed {:on-click #(rf/dispatch [:clear-completed])}
+        \"Clear completed\"])]))
 
 (defn task-entry []
   [:header.header
    [:h1 \"todos\"]
    [todo-input {:class \"new-todo\"
                 :placeholder \"What needs to be done?\"
-                :on-save add-todo}]])
+                :on-save #(rf/dispatch [:add-todo %])}]])
 
 (defn todo-app []
-  (let [showing (r/atom :all)] ; showing can be :all, :active, or :done
-    (fn []
-      [:div.wrapper
-       [:section.todoapp
-        [task-entry]
-        (when (seq @todos)
-          [:div
-           [task-list showing]
-           [footer-controls showing]])]
-       [:footer.info
-        [:p \"Double-click to edit a todo\"]
-        [:p {:style {:margin-top 12
-                     :color \"#b83f45\"}}
-          \"This example uses Reagent\"]]])))
+  [:div.wrapper
+   [:section.todoapp
+    [task-entry]
+    (when (seq @(rf/subscribe [:todos]))
+      [:div
+       [task-list]
+       [footer-controls]])]
+   [:footer.info
+    [:p \"Double-click to edit a todo\"]
+    [:p {:style {:margin-top 12
+                 :color \"#b83f45\"}}
+     \"This example uses Reagent + Re-frame\"]]])
 
 ;; --- Render ----
 
 (defn render []
+  (rf/dispatch-sync [:initialize-db])
+  (add-sample-data)
   (rdom/render [todo-app] (.getElementById js/document \"app\")))
 
 (render)
 ")
 
-(def todo-app-example-css
+(def re-frame-todo-app-example-css
   ".wrapper {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	line-height: 1.4em;

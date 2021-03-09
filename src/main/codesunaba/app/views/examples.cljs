@@ -17,7 +17,9 @@
             [codesunaba.app.examples.re-frame.counter :refer [re-frame-counter-example
                                                               re-frame-counter-example-css]]
             [codesunaba.app.examples.re-frame.tic-tac-toe :refer [re-frame-tic-tac-toe-example
-                                                                  re-frame-tic-tac-toe-example-css]]))
+                                                                  re-frame-tic-tac-toe-example-css]]
+            [codesunaba.app.examples.re-frame.todo-app :refer [re-frame-todo-app-example
+                                                               re-frame-todo-app-example-css]]))
 
 (defn chg [state example example-css]
   (let [app-div (.getElementById js/document "app")]
@@ -51,6 +53,8 @@
                       (chg state re-frame-counter-example re-frame-counter-example-css)
                       "re-frame-tic-tac-toe"
                       (chg state re-frame-tic-tac-toe-example re-frame-tic-tac-toe-example-css)
+                      "re-frame-todo-app"
+                      (chg state re-frame-todo-app-example re-frame-todo-app-example-css)
                       "default")))]
     (fn [_state]
       [:div.mt12.mb24
@@ -73,4 +77,5 @@
 
         [:optgroup {:label "Reagent + Re-frame"}
          [:option {:value "re-frame-counter"} "Counter"]
-         [:option {:value "re-frame-tic-tac-toe"} "Tic-Tac-Toe"]]]])))
+         [:option {:value "re-frame-tic-tac-toe"} "Tic-Tac-Toe"]
+         [:option {:value "re-frame-todo-app"} "Todo App"]]]])))
