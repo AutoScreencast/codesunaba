@@ -15,7 +15,7 @@
 
 (defn clock []
   (let [time-str (-> @timer .toTimeString (str/split \" \") first)]
-    [:h1.clock {:style {:color @time-color, :margin-top 6, :margin-bottom 6}}
+    [:h1.clock {:style {:color @time-color}}
       time-str]))
 
 (defn color-input []

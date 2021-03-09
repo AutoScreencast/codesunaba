@@ -41,13 +41,14 @@
 	;; --- Views ----
 
 	(defn app []
-	  [:div.app
-	   [:h1.header \"Counter\"]
-	   [:div.count
-	    [:button.btn {:on-click #(rf/dispatch [:decrement])} \"–\"]
-	    [:span @(rf/subscribe [:counter])]
-	    [:button.btn {:on-click #(rf/dispatch [:increment])} \"+\"]]
-	   [:div>button.btn.reset {:on-click #(rf/dispatch [:reset])} \"Reset\"]])
+	  [:<>
+	   [:h1.header \"Counter (Reagent + Re-frame)\"]
+     [:div.wrapper
+ 	    [:div.count
+	     [:button.btn {:on-click #(rf/dispatch [:decrement])} \"–\"]
+	     [:span @(rf/subscribe [:counter])]
+	     [:button.btn {:on-click #(rf/dispatch [:increment])} \"+\"]]
+	    [:div>button.btn.reset {:on-click #(rf/dispatch [:reset])} \"Reset\"]]])
 
 	;; --- Render ----
 
@@ -59,7 +60,7 @@
 ")
 
 (def re-frame-counter-example-css
-  ".app {
+  ".wrapper {
   width: 120px;
 }
 

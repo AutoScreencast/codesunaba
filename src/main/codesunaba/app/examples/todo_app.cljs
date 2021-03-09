@@ -153,7 +153,10 @@
            [task-list showing]
            [footer-controls showing]])]
        [:footer.info
-        [:p \"Double-click to edit a todo\"]]])))
+        [:p \"Double-click to edit a todo\"]
+        [:p {:style {:margin-top 12
+                     :color \"#b83f45\"}}
+          \"This example uses Reagent\"]]])))
 
 ;; --- Render ----
 
