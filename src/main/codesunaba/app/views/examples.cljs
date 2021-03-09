@@ -11,6 +11,8 @@
                                                      counter-example-css]]
             [codesunaba.app.examples.color-clock :refer [color-clock-example
                                                          color-clock-example-css]]
+            [codesunaba.app.examples.calculator :refer [calculator-example
+                                                        calculator-example-css]]
             [codesunaba.app.examples.tic-tac-toe :refer [tic-tac-toe-example
                                                          tic-tac-toe-example-css]]
             [codesunaba.app.examples.todo-app :refer [todo-app-example
@@ -55,6 +57,8 @@
                       (chg state counter-example counter-example-css)
                       "color-clock"
                       (chg state color-clock-example color-clock-example-css)
+                      "calculator"
+                      (chg state calculator-example calculator-example-css)
                       "tic-tac-toe"
                       (chg state tic-tac-toe-example tic-tac-toe-example-css)
                       "todo-app"
@@ -87,6 +91,7 @@
          [:option {:value "hello-world"} "Hello, World!"]
          [:option {:value "counter"} "Counter"]
          [:option {:value "color-clock"} "Color Clock"]
+         [:option {:value "calculator"} "Calculator"]
          [:option {:value "tic-tac-toe"} "Tic-Tac-Toe"]
          [:option {:value "todo-app"} "Todo App"]]
 
