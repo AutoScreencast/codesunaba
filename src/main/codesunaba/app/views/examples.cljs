@@ -33,6 +33,11 @@
    a code example is pushed into the code editor, and it is displayed."
   [state]
   (let [value   (r/atom "default")
+        clear-all #(let [app-div (.getElementById js/document "app")]
+                     (rdom/unmount-component-at-node app-div)
+                     (swap! state assoc :evaluated-output nil)
+                     (swap! state assoc :css-input nil)
+                     (swap! state assoc :cljs-input nil))
         handler (fn [event]
                   (let [sel-value (.. event -target -value)]
                     (reset! value sel-value)
@@ -55,7 +60,8 @@
                       (chg state re-frame-tic-tac-toe-example re-frame-tic-tac-toe-example-css)
                       "re-frame-todo-app"
                       (chg state re-frame-todo-app-example re-frame-todo-app-example-css)
-                      "default")))]
+                      "default"
+                      (clear-all))))]
     (fn [_state]
       [:div.mt12.mb24
        [:label.mr8 {:for :examples} "Examples:"]
