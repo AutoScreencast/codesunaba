@@ -2,8 +2,8 @@
 
 (def re-frame-tic-tac-toe-example
   "(ns re-frame.tic-tac-toe-example.core
-	  (:require [reagent.dom :as rdom]
-	            [re-frame.core :as rf]))
+	(:require [reagent.dom :as rdom]
+	          [re-frame.core :as rf]))
 
 ;; --- DB ----
 

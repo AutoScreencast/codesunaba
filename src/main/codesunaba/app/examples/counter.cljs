@@ -2,8 +2,8 @@
 
 (def counter-example
   "(ns counter-example.core
-    (:require [reagent.core :as r]
-              [reagent.dom :as rdom]))
+  (:require [reagent.core :as r]
+            [reagent.dom :as rdom]))
 
 ;; --- State ----
 
@@ -23,10 +23,10 @@
 
 ;; --- Render ----
 
-  (defn render []
-    (rdom/render [app] (.getElementById js/document \"app\")))
+(defn render []
+  (rdom/render [app] (.getElementById js/document \"app\")))
 
-  (render)
+(render)
 ")
 
 (def counter-example-css

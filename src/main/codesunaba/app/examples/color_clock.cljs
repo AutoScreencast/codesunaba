@@ -10,6 +10,8 @@
 (defonce time-color (r/atom \"red\"))
 (defonce time-updater (js/setInterval #(reset! timer (js/Date.)) 1000))
 
+;; --- Views ----
+
 (defn description [message]
   [:h3 message])
 
@@ -26,12 +28,13 @@
             :on-change #(reset! time-color (.. % -target -value))}]])
 
 (defn color-clock []
-  [:div
-   [:h1 \"Color Clock\"]
-   [:div {:style {:margin-top 12}}]
+  [:div.wrapper
+   [:h1.header \"Color Clock\"]
    [description \"The time is now:\"]
    [clock]
    [color-input]])
+
+;; --- Render ----
 
 (defn render []
   (rdom/render [color-clock] (.getElementById js/document \"app\")))
@@ -40,7 +43,15 @@
 ")
 
 (def color-clock-example-css
-  ".clock {
+  ".wrapper {
+  margin: 12px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.clock {
   margin-top: 6px;
   margin-bottom: 6px;
   font-size: 4rem;
