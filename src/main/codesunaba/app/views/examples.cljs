@@ -4,6 +4,8 @@
             [codesunaba.app.utils :refer [insert-style-el]]
             [codesunaba.app.examples.fizzbuzz :refer [fizzbuzz-example
                                                       fizzbuzz-example-css]]
+            [codesunaba.app.examples.fibonacci :refer [fibonacci-example
+                                                       fibonacci-example-css]]
 
             [codesunaba.app.examples.hello-world :refer [hello-world-example
                                                          hello-world-example-css]]
@@ -56,6 +58,8 @@
                     (case sel-value
                       "fizzbuzz"
                       (chg state fizzbuzz-example fizzbuzz-example-css)
+                      "fibonacci"
+                      (chg state fibonacci-example fibonacci-example-css)
 
                       "hello-world"
                       (chg state hello-world-example hello-world-example-css)
@@ -97,7 +101,8 @@
          "--- Please choose an option ---"]
 
         [:optgroup {:label "Pure CLJS"}
-         [:option {:value "fizzbuzz"} "FizzBuzz"]]
+         [:option {:value "fizzbuzz"} "FizzBuzz"]
+         [:option {:value "fibonacci"} "Fibonacci"]]
 
         [:optgroup {:label "Reagent"}
          [:option {:value "hello-world"} "Hello, World!"]
