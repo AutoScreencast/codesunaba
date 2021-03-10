@@ -42,9 +42,9 @@
 
 (defn app []
   [:<>
-   [:h1.header \"Counter (Reagent + Re-frame)\"
-    [:div.wrapper
-     [:div.count]
+   [:h1.header \"Counter (Reagent + Re-frame)\"]
+   [:div.wrapper
+    [:div.count
      [:button.btn {:on-click #(rf/dispatch [:decrement])} \"–\"]
      [:span @(rf/subscribe [:counter])]
      [:button.btn {:on-click #(rf/dispatch [:increment])} \"+\"]]

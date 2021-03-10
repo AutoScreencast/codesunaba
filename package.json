@@ -36,7 +36,7 @@
     "test-browser": "npm run webpack-dev && shadow-cljs watch test-browser",
     "test-once": "npm run webpack-dev && shadow-cljs compile test",
     "clean": "rimraf public/js public/bootstrap",
-    "nuke": "rimraf public/js public/bootstrap .shadow-cljs node_modules yarn.lock package-lock.json out target report.html",
+    "nuke": "rimraf public/js public/bootstrap .shadow-cljs node_modules yarn.lock package-lock.json out report.html",
     "shadow-cljs-server": "shadow-cljs server",
     "webpack-dev": "webpack --mode=development --config webpack.config.js",
     "webpack-prod": "webpack --mode=production --config webpack.config.js"

@@ -60,7 +60,7 @@
             celc-num (js/parseFloat celc-str)
             fahr-str (fahr-str scale temp-str)]
         [:div.wrapper
-         [:h1.header \"Calculator\"]
+         [:h1.header \"Calculator (Reagent)\"]
          [temp-input {:temp-str celc-str
                       :scale :c
                       :on-temp-change celc-change}]

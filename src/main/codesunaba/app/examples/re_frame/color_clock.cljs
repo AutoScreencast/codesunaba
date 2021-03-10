@@ -77,7 +77,7 @@
 
 (defn color-clock []
   [:div.wrapper
-   [:h1.header \"Color Clock\"]
+   [:h1.header \"Color Clock (Reagent + Re-frame)\"]
    [description \"The time is now:\"]
    [clock]
    [color-input]])
