@@ -3,10 +3,11 @@
   "src/test"]
 
  :dependencies
- [[reagent            "1.0.0"]
-  [re-frame           "1.2.0"]
-  [cljs-ajax          "0.8.1"]
-  [binaryage/devtools "1.0.2"]]
+ [[reagent               "1.0.0"]
+  [re-frame              "1.2.0"]
+  [cljs-ajax             "0.8.1"]
+  [day8.re-frame/http-fx "0.2.2"]
+  [binaryage/devtools    "1.0.2"]]
 
  :dev-http
  {3000 "public"}
@@ -30,7 +31,7 @@
   {:target     :bootstrap
    :output-dir "public/bootstrap"
    :exclude    #{cljs.js}
-   :entries    [cljs.js reagent.core reagent.dom re-frame.core ajax.core]
+   :entries    [cljs.js reagent.core reagent.dom re-frame.core ajax.core day8.re-frame.http-fx]
    :macros     []}
 
   :test

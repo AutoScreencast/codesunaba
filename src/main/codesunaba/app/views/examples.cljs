@@ -26,6 +26,8 @@
                                                                   re-frame-color-clock-example-css]]
             [codesunaba.app.examples.re-frame.calculator :refer [re-frame-calculator-example
                                                                  re-frame-calculator-example-css]]
+            [codesunaba.app.examples.re-frame.thinking-in-react :refer [re-frame-thinking-in-react-example
+                                                                        re-frame-thinking-in-react-example-css]]
             [codesunaba.app.examples.re-frame.tic-tac-toe :refer [re-frame-tic-tac-toe-example
                                                                   re-frame-tic-tac-toe-example-css]]
             [codesunaba.app.examples.re-frame.todo-app :refer [re-frame-todo-app-example
@@ -76,6 +78,8 @@
                       (chg state re-frame-color-clock-example re-frame-color-clock-example-css)
                       "re-frame-calculator"
                       (chg state re-frame-calculator-example re-frame-calculator-example-css)
+                      "re-frame-thinking-in-react"
+                      (chg state re-frame-thinking-in-react-example re-frame-thinking-in-react-example-css)
                       "re-frame-tic-tac-toe"
                       (chg state re-frame-tic-tac-toe-example re-frame-tic-tac-toe-example-css)
                       "re-frame-todo-app"
@@ -108,5 +112,6 @@
          [:option {:value "re-frame-counter"} "Counter"]
          [:option {:value "re-frame-color-clock"} "Color Clock"]
          [:option {:value "re-frame-calculator"} "Calculator"]
+         [:option {:value "re-frame-thinking-in-react"} "Thinking in React"]
          [:option {:value "re-frame-tic-tac-toe"} "Tic-Tac-Toe"]
          [:option {:value "re-frame-todo-app"} "Todo App"]]]])))
