@@ -89,7 +89,7 @@
 
 (defn filterable-product-table []
   [:div.wrapper
-   [:h3.header \"“Thinking in React” (Reagent)\"]
+   [:h3.header \"“Thinking in React” (Reagent + js/fetch)\"]
    [:div.fpt
     [search-bar]
     [product-table]]])
