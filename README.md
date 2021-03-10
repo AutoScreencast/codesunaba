@@ -1,6 +1,6 @@
 # Code Sunaba
 
-A simple ClojureScript sandbox (“sunaba” means “sandbox” in Japanese).
+A simple ClojureScript code sandbox (“sunaba” means “sandbox” in Japanese).
 
 <img src="https://github.com/AutoScreencast/codesunaba/blob/master/public/img/20210309codesunaba.png" width="100%">
 
@@ -17,12 +17,6 @@ git clone https://github.com/AutoScreencast/codesunaba.git
 cd codesunaba
 npm install
 npm start
-```
-
-When you see both: `[:app] Build completed.` and `[:bootstrap] Build completed.`, please run the following command in a separate Terminal process:
-
-```
-npm run webpack-dev`
 ```
 
 Then, open `http://localhost:3000` in your browser, and enjoy!
