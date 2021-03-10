@@ -1,17 +1,17 @@
-(ns codesunaba.app.examples.calculator)
+(ns codesunaba.app.examples.re-frame.calculator)
 
-(def calculator-example
-  "(ns calculator-example.core
-  (:require [reagent.core :as r]
-            [reagent.dom :as rdom]))
+(def re-frame-calculator-example
+  "(ns re-frame-calculator-example.core
+  (:require [reagent.dom :as rdom]
+            [re-frame.core :as rf]))
 
 ;; Based on:
 ;; https://reactjs.org/docs/lifting-state-up.html
 
-;; --- State ----
+;; --- DB ----
 
-(defonce state (r/atom {:temp-str \"\"
-                        :scale    :c}))
+(def default-db {:temp-str \"\"
+                 :scale    :c})
 
 ;; --- Utilities ----
 
@@ -36,6 +36,55 @@
     (try-convert temp-str ->f)
     temp-str))
 
+;; --- Events ----
+
+(rf/reg-event-db
+ :initialize-db
+ (fn [_ _]
+   default-db))
+
+(rf/reg-event-db
+ :update-scale
+ (fn [db [_ scale]]
+   (assoc db :scale scale)))
+
+(rf/reg-event-db
+ :update-temp-str
+ (fn [db [_ temp-str]]
+   (assoc db :temp-str temp-str)))
+
+;; --- Subscriptions ----
+
+(rf/reg-sub
+ :scale
+ (fn [db _ _]
+   (:scale db)))
+
+(rf/reg-sub
+ :temp-str
+ (fn [db _ _]
+   (:temp-str db)))
+
+(rf/reg-sub
+ :celc-str
+ :<- [:scale]
+ :<- [:temp-str]
+ (fn [[scale temp-str] _ _]
+   (celc-str scale temp-str)))
+
+(rf/reg-sub
+ :celc-num
+ :<- [:celc-str]
+ (fn [celc-str _ _]
+   (js/parseFloat celc-str)))
+
+(rf/reg-sub
+ :fahr-str
+ :<- [:scale]
+ :<- [:temp-str]
+ (fn [[scale temp-str] _ _]
+   (fahr-str scale temp-str)))
+
 ;; --- Views ----
 
 (defn boiling-verdict [{:keys [celc-num]}]
@@ -51,19 +100,17 @@
 
 (defn calculator []
   (let [celc-change (fn [temp-str]
-                      (swap! state assoc :scale :c)
-                      (swap! state assoc :temp-str temp-str))
+                      (rf/dispatch [:update-scale :c])
+                      (rf/dispatch [:update-temp-str temp-str]))
         fahr-change (fn [temp-str]
-                      (swap! state assoc :scale :f)
-                      (swap! state assoc :temp-str temp-str))]
+                      (rf/dispatch [:update-scale :f])
+                      (rf/dispatch [:update-temp-str temp-str]))]
     (fn []
-      (let [scale (:scale @state)
-            temp-str (:temp-str @state)
-            celc-str (celc-str scale temp-str)
-            celc-num (js/parseFloat celc-str)
-            fahr-str (fahr-str scale temp-str)]
+      (let [celc-str @(rf/subscribe [:celc-str])
+            celc-num @(rf/subscribe [:celc-num])
+            fahr-str @(rf/subscribe [:fahr-str])]
         [:div.wrapper
-         [:h1.header \"Calculator (Reagent)\"]
+         [:h1.header \"Calculator (Reagent + Re-frame)\"]
          [temp-input {:temp-str celc-str
                       :scale :c
                       :on-temp-change celc-change}]
@@ -75,12 +122,13 @@
 ;; --- Render ----
 
 (defn render []
+  (rf/dispatch-sync [:initialize-db])
   (rdom/render [calculator] (.getElementById js/document \"app\")))
 
 (render)
 ")
 
-(def calculator-example-css
+(def re-frame-calculator-example-css
   ".wrapper {
   margin: 24px;
 }

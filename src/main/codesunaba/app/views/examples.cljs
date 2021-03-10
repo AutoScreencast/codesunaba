@@ -22,6 +22,8 @@
                                                               re-frame-counter-example-css]]
             [codesunaba.app.examples.re-frame.color-clock :refer [re-frame-color-clock-example
                                                                   re-frame-color-clock-example-css]]
+            [codesunaba.app.examples.re-frame.calculator :refer [re-frame-calculator-example
+                                                                 re-frame-calculator-example-css]]
             [codesunaba.app.examples.re-frame.tic-tac-toe :refer [re-frame-tic-tac-toe-example
                                                                   re-frame-tic-tac-toe-example-css]]
             [codesunaba.app.examples.re-frame.todo-app :refer [re-frame-todo-app-example
@@ -68,6 +70,8 @@
                       (chg state re-frame-counter-example re-frame-counter-example-css)
                       "re-frame-color-clock"
                       (chg state re-frame-color-clock-example re-frame-color-clock-example-css)
+                      "re-frame-calculator"
+                      (chg state re-frame-calculator-example re-frame-calculator-example-css)
                       "re-frame-tic-tac-toe"
                       (chg state re-frame-tic-tac-toe-example re-frame-tic-tac-toe-example-css)
                       "re-frame-todo-app"
@@ -98,5 +102,6 @@
         [:optgroup {:label "Reagent + Re-frame"}
          [:option {:value "re-frame-counter"} "Counter"]
          [:option {:value "re-frame-color-clock"} "Color Clock"]
+         [:option {:value "re-frame-calculator"} "Calculator"]
          [:option {:value "re-frame-tic-tac-toe"} "Tic-Tac-Toe"]
          [:option {:value "re-frame-todo-app"} "Todo App"]]]])))

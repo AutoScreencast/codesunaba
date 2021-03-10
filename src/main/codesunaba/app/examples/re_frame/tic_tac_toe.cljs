@@ -1,7 +1,7 @@
 (ns codesunaba.app.examples.re-frame.tic-tac-toe)
 
 (def re-frame-tic-tac-toe-example
-  "(ns re-frame.tic-tac-toe-example.core
+  "(ns re-frame-tic-tac-toe-example.core
 	(:require [reagent.dom :as rdom]
 	          [re-frame.core :as rf]))
 

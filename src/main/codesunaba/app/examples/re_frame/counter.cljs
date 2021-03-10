@@ -1,7 +1,7 @@
 (ns codesunaba.app.examples.re-frame.counter)
 
 (def re-frame-counter-example
-  "(ns re-frame.counter-example.core
+  "(ns re-frame-counter-example.core
   (:require [reagent.dom :as rdom]
             [re-frame.core :as rf]))
 
