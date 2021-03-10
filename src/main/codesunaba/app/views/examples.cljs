@@ -2,6 +2,7 @@
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]
             [codesunaba.app.utils :refer [insert-style-el]]
+
             [codesunaba.app.examples.fizzbuzz :refer [fizzbuzz-example
                                                       fizzbuzz-example-css]]
             [codesunaba.app.examples.fibonacci :refer [fibonacci-example
@@ -15,12 +16,13 @@
                                                          color-clock-example-css]]
             [codesunaba.app.examples.calculator :refer [calculator-example
                                                         calculator-example-css]]
-            [codesunaba.app.examples.thinking-in-react :refer [thinking-in-react-example
-                                                               thinking-in-react-example-css]]
             [codesunaba.app.examples.tic-tac-toe :refer [tic-tac-toe-example
                                                          tic-tac-toe-example-css]]
             [codesunaba.app.examples.todo-app :refer [todo-app-example
                                                       todo-app-example-css]]
+
+            [codesunaba.app.examples.thinking-in-react :refer [thinking-in-react-example
+                                                               thinking-in-react-example-css]]
 
             [codesunaba.app.examples.re-frame.counter :refer [re-frame-counter-example
                                                               re-frame-counter-example-css]]
@@ -28,12 +30,13 @@
                                                                   re-frame-color-clock-example-css]]
             [codesunaba.app.examples.re-frame.calculator :refer [re-frame-calculator-example
                                                                  re-frame-calculator-example-css]]
-            [codesunaba.app.examples.re-frame.thinking-in-react :refer [re-frame-thinking-in-react-example
-                                                                        re-frame-thinking-in-react-example-css]]
             [codesunaba.app.examples.re-frame.tic-tac-toe :refer [re-frame-tic-tac-toe-example
                                                                   re-frame-tic-tac-toe-example-css]]
             [codesunaba.app.examples.re-frame.todo-app :refer [re-frame-todo-app-example
-                                                               re-frame-todo-app-example-css]]))
+                                                               re-frame-todo-app-example-css]]
+
+            [codesunaba.app.examples.re-frame.thinking-in-react :refer [re-frame-thinking-in-react-example
+                                                                        re-frame-thinking-in-react-example-css]]))
 
 (defn chg [state example example-css]
   (let [app-div (.getElementById js/document "app")]
@@ -69,12 +72,13 @@
                       (chg state color-clock-example color-clock-example-css)
                       "calculator"
                       (chg state calculator-example calculator-example-css)
-                      "thinking-in-react"
-                      (chg state thinking-in-react-example thinking-in-react-example-css)
                       "tic-tac-toe"
                       (chg state tic-tac-toe-example tic-tac-toe-example-css)
                       "todo-app"
                       (chg state todo-app-example todo-app-example-css)
+
+                      "thinking-in-react"
+                      (chg state thinking-in-react-example thinking-in-react-example-css)
 
                       "re-frame-counter"
                       (chg state re-frame-counter-example re-frame-counter-example-css)
@@ -82,12 +86,13 @@
                       (chg state re-frame-color-clock-example re-frame-color-clock-example-css)
                       "re-frame-calculator"
                       (chg state re-frame-calculator-example re-frame-calculator-example-css)
-                      "re-frame-thinking-in-react"
-                      (chg state re-frame-thinking-in-react-example re-frame-thinking-in-react-example-css)
                       "re-frame-tic-tac-toe"
                       (chg state re-frame-tic-tac-toe-example re-frame-tic-tac-toe-example-css)
                       "re-frame-todo-app"
                       (chg state re-frame-todo-app-example re-frame-todo-app-example-css)
+
+                      "re-frame-thinking-in-react"
+                      (chg state re-frame-thinking-in-react-example re-frame-thinking-in-react-example-css)
 
                       "default"
                       (clear-all))))]
@@ -113,10 +118,16 @@
          [:option {:value "tic-tac-toe"} "Tic-Tac-Toe"]
          [:option {:value "todo-app"} "Todo App"]]
 
+        [:optgroup {:label "Reagent + js/fetch"}
+         [:option {:value "thinking-in-react"} "Thinking in React"]]
+
         [:optgroup {:label "Reagent + Re-frame"}
          [:option {:value "re-frame-counter"} "Counter"]
          [:option {:value "re-frame-color-clock"} "Color Clock"]
          [:option {:value "re-frame-calculator"} "Calculator"]
          [:option {:value "re-frame-thinking-in-react"} "Thinking in React"]
          [:option {:value "re-frame-tic-tac-toe"} "Tic-Tac-Toe"]
-         [:option {:value "re-frame-todo-app"} "Todo App"]]]])))
+         [:option {:value "re-frame-todo-app"} "Todo App"]]
+
+        [:optgroup {:label "Reagent + Re-frame + cljs-ajax"}
+         [:option {:value "re-frame-thinking-in-react"} "Thinking in React"]]]])))
