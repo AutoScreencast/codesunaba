@@ -13,6 +13,8 @@
                                                          color-clock-example-css]]
             [codesunaba.app.examples.calculator :refer [calculator-example
                                                         calculator-example-css]]
+            [codesunaba.app.examples.thinking-in-react :refer [thinking-in-react-example
+                                                               thinking-in-react-example-css]]
             [codesunaba.app.examples.tic-tac-toe :refer [tic-tac-toe-example
                                                          tic-tac-toe-example-css]]
             [codesunaba.app.examples.todo-app :refer [todo-app-example
@@ -61,6 +63,8 @@
                       (chg state color-clock-example color-clock-example-css)
                       "calculator"
                       (chg state calculator-example calculator-example-css)
+                      "thinking-in-react"
+                      (chg state thinking-in-react-example thinking-in-react-example-css)
                       "tic-tac-toe"
                       (chg state tic-tac-toe-example tic-tac-toe-example-css)
                       "todo-app"
@@ -96,6 +100,7 @@
          [:option {:value "counter"} "Counter"]
          [:option {:value "color-clock"} "Color Clock"]
          [:option {:value "calculator"} "Calculator"]
+         [:option {:value "thinking-in-react"} "Thinking in React"]
          [:option {:value "tic-tac-toe"} "Tic-Tac-Toe"]
          [:option {:value "todo-app"} "Todo App"]]
 
