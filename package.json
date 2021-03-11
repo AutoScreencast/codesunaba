@@ -38,10 +38,13 @@
     "clean": "rimraf public/js public/bootstrap",
     "nuke": "rimraf public/js public/bootstrap .shadow-cljs node_modules yarn.lock package-lock.json out report.html",
     "shadow-cljs-server": "shadow-cljs server",
+    "bp-copy-css": "copyfiles -f ./node_modules/normalize.css/normalize.css ./node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css ./node_modules/@blueprintjs/core/lib/css/blueprint.css ./node_modules/@blueprintjs/popover2/lib/css/blueprint-popover2.css ./public/css",
     "webpack-dev": "webpack --mode=development --config webpack.config.js",
     "webpack-prod": "webpack --mode=production --config webpack.config.js"
   },
   "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "process": "^0.11.10",
     "rimraf": "^3.0.2",
     "serve": "^11.3.2",
     "shadow-cljs": "2.11.18",
@@ -49,6 +52,8 @@
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
+    "@blueprintjs/core": "^3.40.1",
+    "@blueprintjs/popover2": "^0.3.3",
     "@monaco-editor/react": "^4.0.11",
     "react": "17.0.1",
     "react-dom": "17.0.1"

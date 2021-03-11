@@ -1,5 +1,6 @@
 (ns codesunaba.app.utils
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [reagent.dom :as rdom]))
 
 (defn debounce [timer-atom fun delay-in-ms]
   (when @timer-atom
@@ -19,3 +20,10 @@
     (.setAttribute new-style-el "id" style-tag-id)
     (set! (.-innerText new-style-el) (escape-css css))
     (.appendChild (.-head js/document) new-style-el)))
+
+(defn clear-all [state]
+  (let [app-div (.getElementById js/document "app")]
+    (rdom/unmount-component-at-node app-div)
+    (swap! state assoc :evaluated-output nil)
+    (swap! state assoc :css-input nil)
+    (swap! state assoc :cljs-input nil)))

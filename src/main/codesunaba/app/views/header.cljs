@@ -1,23 +1,70 @@
-(ns codesunaba.app.views.header)
+(ns codesunaba.app.views.header
+  (:require [reagent.core :as r]
+            [codesunaba.app.utils :refer [clear-all]]
+            [codesunaba.app.bp :refer [anchor-button button navbar navbar-group
+                                       navbar-heading navbar-divider colors
+                                       popover2]]
+            [codesunaba.app.views.examples :refer [examples]]))
 
-(defn header []
-  [:<>
-   [:div.mb24.jc-space-between-ai-center
-    [:h1.tooltip.no-bb.mb12.dodgerblue.bold "Code Sunaba"
-     [:div.tooltiptext.position-right.normal "Sunaba is Japanese for “sandbox”"]]
-    [:h3.grey.tar
-     [:i "“a simple ClojureScript sandbox”"]]]
+(defn popover-contents []
+  (r/as-element [:div {:style {:padding 24, :width 400, :line-height 1.5}}
+                 [:div.mb12 "“Sunaba” (砂場) is Japanese for “sandbox”."]
+                 [:div.mb12 "Code Sunaba is a live ClojureScript code sandbox, in which you can write and display React components (using the Reagent wrapper around React)."]
+                 [:div.mb12 "The sandbox supports Re-frame for state management, and you can interact with backend APIs using js/fetch or cljs-ajax."]
+                 [:div.mb12 "Render your React components to a target div node with id \"app\". You can style your React components using the CSS editor (excluding pseudo-elements)."]
+                 [:div "Choose a code example to see more details."]]))
 
-   [:div.jc-space-between-ai-center
-    [:h4.dimgrey.mb12
-     "✍️ Write some ClojureScript code in the code editor below."]
-    [:a.forestgreen {:href "https://github.com/AutoScreencast/codesunaba"}
-     "GitHub"]]
+(defn header [_state]
+  (let [orange3       (:ORANGE3 colors)
+        popover-open? (r/atom false)]
+    (fn [state]
+      (let [show-output?     (:show-output? @state)
+            show-css-editor? (:show-css-editor? @state)
+            dark-theme?      (:dark-theme? @state)
+            inputs-empty?    (and (empty? (:cljs-input @state))
+                                  (empty? (:css-input @state)))]
 
-   [:h4.mb12.dimgrey.tooltip
-    "☝️ You can create React components using Reagent. They will be
-	  rendered below the horizontal line under ‘Output’."
-    [:div.tooltiptext
-     [:div.mb6 "The packages ‘reagent.core’, ‘reagent.dom’, and ‘re-frame.core’ are supported."]
-     [:div.mb6 "You can render your components to the DOM by targeting the ‘app’ div."]
-     [:div.mb6 "CSS styles will apply to the entire page."]]]])
+        [navbar
+         [navbar-group
+          [popover2 {:interaction-kind :hover
+                     :is-open @popover-open?
+                     :on-interaction (fn [next-open-state _event]
+                                       (reset! popover-open? next-open-state))
+                     :content (popover-contents)
+                     :placement :bottom-end}
+           [navbar-heading {:style {:color orange3
+                                    :font-weight :bold
+                                    :text-decoration :underline
+                                    :cursor :pointer}}
+            "Code Sunaba"]] [navbar-divider]
+          [examples state]
+          [navbar-divider]
+          [button {:text (if show-output? "Hide Output" "Show Output")
+                   :on-click #(swap! state update-in [:show-output?] not)
+                   :intent :primary
+                   :right-icon (if show-output? :eye-off :eye-open)
+                   :minimal true}]
+          [button {:text (if show-css-editor? "Hide CSS" "Show CSS")
+                   :on-click #(swap! state update-in [:show-css-editor?] not)
+                   :intent :primary
+                   :right-icon (if show-output? :eye-off :eye-open)
+                   :minimal true}]
+          [button {:text (if dark-theme? "Light Theme" "Dark Theme")
+                   :on-click #(swap! state update-in [:dark-theme?] not)
+                   :intent :primary
+                   :right-icon (if dark-theme? :flash :moon)
+                   :minimal true}]
+          [button {:text "Clear All"
+                   :on-click #(clear-all state)
+                   :intent :danger
+                   :right-icon :delete
+                   :disabled inputs-empty?
+                   :minimal true}]]
+
+         [navbar-group {:align :right}
+          [anchor-button {:text "GitHub"
+                          :href "https://github.com/AutoScreencast/codesunaba"
+                          :target "_blank"
+                          :intent :success
+                          :minimal true
+                          :right-icon :share}]]]))))

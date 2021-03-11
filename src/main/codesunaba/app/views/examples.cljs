@@ -1,7 +1,8 @@
 (ns codesunaba.app.views.examples
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]
-            [codesunaba.app.utils :refer [insert-style-el]]
+            [codesunaba.app.utils :refer [insert-style-el clear-all]]
+            [codesunaba.app.bp :refer [html-select]]
 
             [codesunaba.app.examples.fizzbuzz :refer [fizzbuzz-example
                                                       fizzbuzz-example-css]]
@@ -50,11 +51,6 @@
    a code example is pushed into the code editor, and it is displayed."
   [state]
   (let [value   (r/atom "default")
-        clear-all #(let [app-div (.getElementById js/document "app")]
-                     (rdom/unmount-component-at-node app-div)
-                     (swap! state assoc :evaluated-output nil)
-                     (swap! state assoc :css-input nil)
-                     (swap! state assoc :cljs-input nil))
         handler (fn [event]
                   (let [sel-value (.. event -target -value)]
                     (reset! value sel-value)
@@ -95,39 +91,37 @@
                       (chg state re-frame-thinking-in-react-example re-frame-thinking-in-react-example-css)
 
                       "default"
-                      (clear-all))))]
+                      (clear-all state))))]
     (fn [_state]
-      [:div.mt12.mb24
-       [:label.mr8 {:for :examples} "Examples:"]
-       [:select {:id        :examples
-                 :value     @value
-                 :on-change handler}
-        [:option {:value "default"}
-         "--- Please choose an option ---"]
+      [html-select {:value     @value
+                    :on-change handler
+                    :minimal   true}
+       [:option {:value "default"}
+        "Choose a Code Example …"]
 
-        [:optgroup {:label "Pure CLJS"}
-         [:option {:value "fizzbuzz"} "FizzBuzz"]
-         [:option {:value "fibonacci"} "Fibonacci"]]
+       [:optgroup {:label "Pure CLJS"}
+        [:option {:value "fizzbuzz"} "FizzBuzz"]
+        [:option {:value "fibonacci"} "Fibonacci"]]
 
-        [:optgroup {:label "Reagent"}
-         [:option {:value "hello-world"} "Hello, World!"]
-         [:option {:value "counter"} "Counter"]
-         [:option {:value "color-clock"} "Color Clock"]
-         [:option {:value "calculator"} "Calculator"]
-         [:option {:value "thinking-in-react"} "Thinking in React"]
-         [:option {:value "tic-tac-toe"} "Tic-Tac-Toe"]
-         [:option {:value "todo-app"} "Todo App"]]
+       [:optgroup {:label "Reagent"}
+        [:option {:value "hello-world"} "Hello, World!"]
+        [:option {:value "counter"} "Counter"]
+        [:option {:value "color-clock"} "Color Clock"]
+        [:option {:value "calculator"} "Calculator"]
+        [:option {:value "thinking-in-react"} "Thinking in React"]
+        [:option {:value "tic-tac-toe"} "Tic-Tac-Toe"]
+        [:option {:value "todo-app"} "Todo App"]]
 
-        [:optgroup {:label "Reagent + js/fetch"}
-         [:option {:value "thinking-in-react"} "Thinking in React"]]
+       [:optgroup {:label "Reagent + js/fetch"}
+        [:option {:value "thinking-in-react"} "Thinking in React"]]
 
-        [:optgroup {:label "Reagent + Re-frame"}
-         [:option {:value "re-frame-counter"} "Counter"]
-         [:option {:value "re-frame-color-clock"} "Color Clock"]
-         [:option {:value "re-frame-calculator"} "Calculator"]
-         [:option {:value "re-frame-thinking-in-react"} "Thinking in React"]
-         [:option {:value "re-frame-tic-tac-toe"} "Tic-Tac-Toe"]
-         [:option {:value "re-frame-todo-app"} "Todo App"]]
+       [:optgroup {:label "Reagent + Re-frame"}
+        [:option {:value "re-frame-counter"} "Counter"]
+        [:option {:value "re-frame-color-clock"} "Color Clock"]
+        [:option {:value "re-frame-calculator"} "Calculator"]
+        [:option {:value "re-frame-thinking-in-react"} "Thinking in React"]
+        [:option {:value "re-frame-tic-tac-toe"} "Tic-Tac-Toe"]
+        [:option {:value "re-frame-todo-app"} "Todo App"]]
 
-        [:optgroup {:label "Reagent + Re-frame + cljs-ajax"}
-         [:option {:value "re-frame-thinking-in-react"} "Thinking in React"]]]])))
+       [:optgroup {:label "Reagent + Re-frame + cljs-ajax"}
+        [:option {:value "re-frame-thinking-in-react"} "Thinking in React"]]])))

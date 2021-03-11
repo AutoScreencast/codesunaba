@@ -193,7 +193,7 @@
 
 .todoapp h1 {
 	position: absolute;
-	top: -80px;
+	top: -140px;
 	width: 100%;
 	font-size: 80px;
 	font-weight: 200;

@@ -1,32 +1,5 @@
-/* Minimal Reset CSS */
-
-html {
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-* {
-  box-sizing: inherit;
-}
-
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ol,
-ul {
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-	margin: 24px;
+:root {
+	--faintgray: rgba(211,211,211,0.5);
 }
 
 /* Utilities */
@@ -46,10 +19,11 @@ body {
 
 .tar { text-align: right; }
 
-.grey { color: grey }
-.dimgrey { color: dimgrey }
-.dodgerblue { color: dodgerblue }
-.forestgreen { color: forestgreen }
+.vspace12 { height: 12px };
+
+.gray { color: gray }
+.lightgray { color: lightgray }
+.dimgray { color: dimgray }
 
 .bold { font-weight: bold; }
 .normal { font-weight: normal; }
@@ -67,55 +41,22 @@ body {
 	align-items: center;
 }
 
+.app-div-empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 48px;
+}
+
 .white-space-pre-wrap {
 	white-space: pre-wrap;
 }
 
-/* Tooltip */
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-	border-bottom: 1px dotted black;
-}
-
-/* remove border-bottom from tooltip */
-.no-bb { border-bottom: none; }
-
-/* positions tooltip below */
-.tooltip .tooltiptext {
-	--tooltip-text-width: 500px;
-  visibility: hidden;
-  background-color: dodgerblue;
-  color: white;
-  text-align: left;
-  padding: 8px;
-  border-radius: 6px;
-  position: absolute;
-  width: var(--tooltip-text-width);
-  top: 100%;
-  left: 50%;
-  margin-left: calc(var(--tooltip-text-width) / -2.0);
-  z-index: 1;
-}
-
-.tooltip .position-right {
-  top: -8px;
-  left: 240%;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
 /* Code Editor */
 
-.clear-button {
-	background: red;
-	padding; 4px 8px;
-	margin: 2px 0;
-	border: 0;
-	color: white;
+.editor {
+	border-top: 1px solid var(--faintgray);
+	border-bottom: 1px solid var(--faintgray);
 }
 
 /* TodoMVC Hack CSS */
