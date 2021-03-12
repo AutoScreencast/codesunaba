@@ -36,25 +36,31 @@
                                     :font-weight :bold
                                     :text-decoration :underline
                                     :cursor :pointer}}
-            [:span "Code Sunaba"]]] [navbar-divider]
+            "Code Sunaba"]]
+          [navbar-divider]
           [examples state]
           [navbar-divider]
-          [button {:text (if show-output? "Hide Output" "Show Output")
+          [button {:text (r/as-element [:span {:class [:hide-on-mobile :hide-on-tablet]}
+                                        (if show-output? "Hide Output" "Show Output")])
                    :on-click #(swap! state update-in [:show-output?] not)
                    :intent :primary
                    :right-icon (if show-output? :eye-off :eye-open)
                    :minimal true}]
-          [button {:text (if show-css-editor? "Hide CSS" "Show CSS")
+          [button {:text (r/as-element [:span {:class [:hide-on-mobile :hide-on-tablet]}
+                                        (if show-css-editor? "Hide CSS" "Show CSS")])
                    :on-click #(swap! state update-in [:show-css-editor?] not)
                    :intent :primary
-                   :right-icon (if show-output? :cube-remove :cube-add)
+                   :right-icon (if show-css-editor? :cube-remove :cube-add)
                    :minimal true}]
-          [button {:text (if dark-theme? "Light Theme" "Dark Theme")
+          [button {:text (r/as-element [:span {:class [:hide-on-mobile :hide-on-tablet]}
+                                        (if dark-theme? "Light Theme" "Dark Theme")])
                    :on-click #(swap! state update-in [:dark-theme?] not)
                    :intent :primary
                    :right-icon (if dark-theme? :flash :moon)
                    :minimal true}]
-          [button {:text "Clear All"
+          [button {:text (r/as-element [:span {:class [:hide-on-mobile :hide-on-tablet]}
+                                        "Clear All"])
+                   :class [:hide-on-mobile]
                    :on-click #(clear-all state)
                    :intent :danger
                    :right-icon :delete
@@ -62,7 +68,9 @@
                    :minimal true}]]
 
          [navbar-group {:align :right}
-          [anchor-button {:text "GitHub"
+          [anchor-button {:text (r/as-element [:span {:class [:hide-on-mobile :hide-on-tablet]}
+                                               "GitHub"])
+                          :class [:hide-on-mobile]
                           :href "https://github.com/AutoScreencast/codesunaba"
                           :target "_blank"
                           :intent :success

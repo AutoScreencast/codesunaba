@@ -57,6 +57,21 @@
 	white-space: pre-wrap;
 }
 
+/* Media Queries */
+
+@media (max-width: 600px) {
+    /* CSS in here for mobile only */
+	.hide-on-mobile { display: none; }
+}
+@media (min-width: 601px) and (max-width: 960px) {
+    /* CSS in here for tablet only */
+	.hide-on-tablet { display: none; }
+}
+@media (min-width: 961px) {
+    /* CSS in here for desktop only */
+	.hide-on-desktop { display: none; }
+}
+
 /* Code Editor */
 
 .editor {
