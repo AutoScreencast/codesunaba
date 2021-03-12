@@ -2,6 +2,11 @@
 	--faintgray: rgba(211,211,211,0.5);
 }
 
+#loading-message,
+#preparing-message {
+  padding: 24px;
+}
+
 /* Utilities */
 
 .mt12 { margin-top: 12px; }

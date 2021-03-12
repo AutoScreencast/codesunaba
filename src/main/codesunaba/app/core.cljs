@@ -94,7 +94,7 @@
                       :icon-size 120}]
                [:div "React components"]
                [:div "will display here"]])]
-           [:p "Preparing the self-hosted CLJS environment..."])]))))
+           [:p#preparing-message "Preparing the self-hosted CLJS environment..."])]))))
 
 (defn render []
   (rdom/render [app] (.getElementById js/document "root")))
