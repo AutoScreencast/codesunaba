@@ -36,7 +36,7 @@
                                     :font-weight :bold
                                     :text-decoration :underline
                                     :cursor :pointer}}
-            "Code Sunaba"]] [navbar-divider]
+            [:span "Code Sunaba"]]] [navbar-divider]
           [examples state]
           [navbar-divider]
           [button {:text (if show-output? "Hide Output" "Show Output")
@@ -47,7 +47,7 @@
           [button {:text (if show-css-editor? "Hide CSS" "Show CSS")
                    :on-click #(swap! state update-in [:show-css-editor?] not)
                    :intent :primary
-                   :right-icon (if show-output? :eye-off :eye-open)
+                   :right-icon (if show-output? :cube-remove :cube-add)
                    :minimal true}]
           [button {:text (if dark-theme? "Light Theme" "Dark Theme")
                    :on-click #(swap! state update-in [:dark-theme?] not)

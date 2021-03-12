@@ -74,13 +74,13 @@
          (if eval-ready?
            [:<>
             [:div.flex
-             [:div {:style {:width (if show-css-editor? "75%" "100%")}}
+             [:div {:style {:width (if show-css-editor? "65%" "100%")}}
               [code-editor {:label           "ClojureScript"
                             :font-size       14
                             :state           state
                             :editor-language "clojure"}]]
              (when show-css-editor?
-               [:div {:style {:width "25%"}}
+               [:div {:style {:width "35%"}}
                 [code-editor {:label           "CSS"
                               :font-size       12
                               :state           state
