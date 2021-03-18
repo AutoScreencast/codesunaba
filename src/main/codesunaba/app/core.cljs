@@ -33,13 +33,36 @@
                         :css-input        nil
                         :evaluated-output nil}))
 
+#_(add-watch state :log #(do
+                           (.log js/console "watching output:" (:evaluated-output %4))
+                           (.log js/console "watching output type:" (goog/typeOf (:evaluated-output %4)))))
+
 (defn compile-it [code]
   (let [options  {:eval cljs/js-eval
                   :load (partial boot/load c-state)}
-        callback (fn [result]
-                   (swap! state assoc :evaluated-output (:value result)))]
+        #_#_callback (fn [result]
+                       (swap! state assoc :evaluated-output (:value result)))
+        callback (try (fn [result]
+                        (let [e (:error result)
+                              v (:value result)]
+                          (println "--" result)
+                          (if e
+                            (do
+                              #_(println "======== ERROR ========")
+                              #_(println "data" (ex-data e))
+                              (.log js/console (.-name (ex-cause e)) ":" (.-message (ex-cause e))))
+                            (try
+                              #_(println "======== RESULT ========")
+                              #_(.log js/console "result type:" (goog/typeOf v))
+                              (swap! state assoc :evaluated-output v)
+                              (catch js/Error err
+                                (.log js/console "Caught inner result error:" (.-name err) ":" (.-message err)))))))
+                      (catch js/Error err
+                        (.log js/console "Caught callback error:" err)))]
     (when code
-      (cljs/eval-str c-state code "[code-sunaba]" options callback)
+      (try
+        (cljs/eval-str c-state code "[code-sunaba]" options callback)
+        (catch js/Error e (.log js/console "eval-str error:" e)))
       #_(cljs/compile-str (cljs/empty-state) code #(println (:value %))))))
 
 (defn app []
