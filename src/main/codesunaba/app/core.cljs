@@ -97,7 +97,7 @@
            [:p#preparing-message "Preparing the self-hosted CLJS environment..."])]))))
 
 (defn render []
-  (rdom/render [app] (.getElementById js/document "root")))
+  (rdom/render [app] (.getElementById js/document "codesunabaroot")))
 
 (defn ^:export main []
   (set-light-bg!)
