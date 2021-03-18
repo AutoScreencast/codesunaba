@@ -9,9 +9,9 @@
 (defn popover-contents []
   (r/as-element [:div {:style {:padding 24, :width 400, :line-height 1.5}}
                  [:div.mb12 "“Sunaba” (砂場) is Japanese for “sandbox”."]
-                 [:div.mb12 "Code Sunaba is a live ClojureScript code sandbox, in which you can write and display React components (using the Reagent wrapper around React)."]
+                 [:div.mb12 "Code Sunaba is a live ClojureScript code sandbox, in which you can evaluate ClojureScript expressions and also display React components (using the Reagent wrapper around React)."]
                  [:div.mb12 "The sandbox supports Re-frame for state management, and you can interact with backend APIs using js/fetch or cljs-ajax."]
-                 [:div.mb12 "Render your React components to a target div node with id \"app\". You can style your React components using the CSS editor (excluding pseudo-elements)."]
+                 [:div.mb12 "Render your React components to the target div element with id \"app\". You can style your React components using the CSS editor."]
                  [:div "Choose a code example to see more details."]]))
 
 (defn header [_state]
