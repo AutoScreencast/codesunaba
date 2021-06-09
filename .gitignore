@@ -19,3 +19,6 @@ yarn-debug.log*
 yarn-error.log*
 /.clj-kondo
 /.lsp
+pom.xml
+codesunaba.iml
+/.idea
